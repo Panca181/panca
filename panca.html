@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anca Net - Premium Computer Store</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #ff7675;
+            --success: #00b894;
+            --accent: #fdcb6e;
+            --wa-color: #25D366;
+            --dark: #2d3436;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            min-height: 100vh;
+            color: #fff;
+            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            background-size: 400% 400%;
+            animation: mainGradient 15s ease infinite;
+            overflow-x: hidden;
+        }
+
+        @keyframes mainGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .orb {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.3;
+            animation: move 20s infinite alternate;
+        }
+        .orb-1 { background: #6c5ce7; top: -100px; left: -100px; }
+        .orb-2 { background: #e84393; bottom: -100px; right: -100px; animation-delay: -5s; }
+
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(150px, 150px) scale(1.2); }
+        }
+
+        nav { 
+            background: rgba(15, 12, 41, 0.8); 
+            backdrop-filter: blur(20px);
+            padding: 20px 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-container { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 0 25px; }
+        .logo { font-size: 1.8em; font-weight: 800; letter-spacing: 2px; color: #fff; text-decoration: none; cursor: pointer; background: linear-gradient(to right, #a29bfe, #fab1a0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-menu a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 25px; font-weight: 600; transition: 0.3s; padding: 10px 20px; border-radius: 12px; cursor: pointer; }
+        .nav-menu a:hover, .nav-menu a.active { color: #fff; background: var(--glass); }
+
+        .container { 
+            max-width: 1200px; 
+            margin: 40px auto; 
+            padding: 40px; 
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
+            box-sizing: border-box;
+        }
+        
+        .search-input { 
+            width: 100%; 
+            padding: 18px 30px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(255,255,255,0.2); 
+            font-size: 1.1em; 
+            outline: none; 
+            transition: 0.4s; 
+            background: rgba(255,255,255,0.05);
+            color: white;
+            margin-bottom: 40px;
+            box-sizing: border-box;
+        }
+
+        .main-layout { display: flex; gap: 40px; }
+        .katalog { flex: 2.5; }
+        .grid-produk { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
+        
+        .card { 
+            background: rgba(255,255,255,0.03); 
+            border-radius: 25px; 
+            overflow: hidden; 
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s;
+            display: flex; flex-direction: column; height: 100%;
+        }
+        .card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.08); border-color: var(--primary); }
+        .card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-body h4 { margin: 0 0 10px 0; font-size: 1em; color: #fff; height: 40px; overflow: hidden; }
+        .harga { color: var(--secondary); font-weight: 800; font-size: 1.2em; margin-bottom: 15px; }
+
+        .keranjang { 
+            flex: 1; 
+            background: rgba(0,0,0,0.2); 
+            padding: 25px; 
+            border-radius: 30px; 
+            border: 1px solid rgba(255,255,255,0.05);
+            height: fit-content; 
+            position: sticky; 
+            top: 120px;
+        }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 0.9em; }
+        .qty-badge { background: var(--primary); padding: 2px 8px; border-radius: 6px; font-weight: bold; margin-right: 8px; }
+
+        .btn { border: none; border-radius: 15px; cursor: pointer; font-weight: 700; padding: 15px; transition: 0.3s; color: white; display: block; width: 100%; font-size: 0.9em; }
+        .btn-add { background: var(--primary); }
+        .btn-checkout { background: var(--success); margin-top: 15px; }
+        .btn-wa { background: var(--wa-color); text-decoration: none; text-align: center; margin-top: 10px; }
+
+        /* --- SCAN STRUK THERMAL EFFECT --- */
+        #area-struk {
+            display: none;
+            width: 320px;
+            margin: 30px auto;
+            padding: 35px 20px;
+            background: #fffef0;
+            color: #111;
+            font-family: 'Courier New', Courier, monospace;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            border: 1px solid #ddd;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 97%, 98% 100%, 96% 97%, 94% 100%, 92% 97%, 90% 100%, 88% 97%, 86% 100%, 84% 97%, 82% 100%, 80% 97%, 78% 100%, 76% 97%, 74% 100%, 72% 97%, 70% 100%, 68% 97%, 66% 100%, 64% 97%, 62% 100%, 60% 97%, 58% 100%, 56% 97%, 54% 100%, 52% 97%, 50% 100%, 48% 97%, 46% 100%, 44% 97%, 42% 100%, 40% 97%, 38% 100%, 36% 97%, 34% 100%, 32% 97%, 30% 100%, 28% 97%, 26% 100%, 24% 97%, 22% 100%, 20% 97%, 18% 100%, 16% 97%, 14% 100%, 12% 97%, 10% 100%, 8% 97%, 6% 100%, 4% 97%, 2% 100%, 0% 97%);
+        }
+
+        #area-struk::after {
+            content: "ANCA NET";
+            position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 40px; color: rgba(0,0,0,0.03); font-weight: bold; pointer-events: none;
+        }
+
+        .dashed-line { border-bottom: 1px dashed #555; margin: 10px 0; }
+        
+        /* QR CODE STYLING */
+        .qr-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #eee;
+        }
+        .qr-container img {
+            width: 150px;
+            height: 150px;
+        }
+        .qr-text {
+            font-size: 9px;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            #area-struk, #area-struk * { visibility: visible; }
+            #area-struk { position: absolute; left: 0; top: 0; width: 100%; border: none; box-shadow: none; display: block !important; }
+            .no-print { display: none !important; }
+        }
+
+        @media (max-width: 950px) { .main-layout { flex-direction: column; } .container { margin: 15px; padding: 25px; } }
+    </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<nav>
+    <div class="nav-container">
+        <a class="logo" onclick="showSection('home')">ANCA NET</a>
+        <div class="nav-menu">
+            <a onclick="showSection('home')" id="nav-home" class="active">Katalog</a>
+            <a onclick="showSection('about')" id="nav-about">Informasi</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div id="home" class="section active">
+        <input type="text" id="searchBar" class="search-input" placeholder="Cari Hardware... (Contoh: RTX, i5, RAM)" onkeyup="filterProduk()">
+
+        <div class="main-layout">
+            <div class="katalog">
+                <div id="grid-produk" class="grid-produk"></div>
+            </div>
+
+            <div class="keranjang">
+                <h3 style="margin-top:0;">🛒 Keranjang</h3>
+                <div id="list-keranjang"></div>
+                <div id="wrapper-total" style="display:none; margin-top:20px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
+                    <div id="perhitungan-harga" style="line-height: 2;"></div>
+                    <button class="btn btn-checkout" onclick="prosesTransaksi()">CHECKOUT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="section" style="display:none; text-align: center;">
+        <h2>Tentang Anca Net</h2>
+        <p>Pusat Komponen Komputer & Perakitan PC Gaming di Bandar Lampung.</p>
+        <p>Jl. Sinar Laut, Kota Karang, Bandar Lampung.</p>
+    </div>
+</div>
+
+<div id="area-struk">
+    <div style="text-align: center;">
+        <h3 style="margin:0; font-size: 18px;">ANCA NET</h3>
+        <p style="font-size:10px; margin:0;">Sinar Laut, Bandar Lampung</p>
+        <p style="font-size:10px; margin:0;">WA: 0838-9665-4847</p>
+    </div>
+    <div class="dashed-line"></div>
+    <div style="font-size:11px; display: flex; justify-content: space-between;">
+        <span id="st-nota"></span>
+        <span id="st-tgl"></span>
+    </div>
+    <div class="dashed-line"></div>
+    <table id="st-items" style="width:100%; font-size:11px; border-collapse: collapse;"></table>
+    <div class="dashed-line"></div>
+    <div style="font-size:12px;">
+        <div style="display:flex; justify-content:space-between;"><span>SUBTOTAL:</span> <span id="st-sub"></span></div>
+        <div style="display:flex; justify-content:space-between;"><span>DISCOUNT (5%):</span> <span id="st-disc"></span></div>
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size: 14px; margin-top:5px;">
+            <span>TOTAL BAYAR:</span> <span id="st-total"></span>
+        </div>
+    </div>
+
+    <div class="qr-container">
+        <p class="qr-text">Scan untuk Pembayaran</p>
+        <img id="qr-image" src="" alt="QR Pembayaran">
+        <p class="qr-text" id="qr-id-text"></p>
+    </div>
+
+    <div style="text-align:center; margin-top:10px; font-size:10px;">
+        <p>Terima Kasih Atas Kepercayaan Anda</p>
+        <p>Instagram: @anca_net</p>
+    </div>
+
+    <div class="no-print" style="margin-top: 30px;">
+        <a id="wa-link" href="#" target="_blank" class="btn btn-wa">KONFIRMASI WHATSAPP</a>
+        <button class="btn" style="background:#333; margin-top:10px;" onclick="window.print()">SIMPAN PDF / PRINT</button>
+        <button class="btn" style="background:none; color:#888; text-decoration:underline;" onclick="document.getElementById('area-struk').style.display='none'">TUTUP</button>
+    </div>
+</div>
+
+<script>
+    const dataProduk = [
+        { id: 1, nama: "Intel Core i5-12400F", harga: 2100000, img: "https://elevenkomputer.com/13984-home_default/cpu-intel-core-i5-12400f-25ghz-up-to-44ghz-cache-18mb-box-socket-lga-1700.jpg" },
+        { id: 2, nama: "NVIDIA RTX 3060 12GB", harga: 4750000, img: "https://images.unsplash.com/photo-1591489378430-ef2f4c626b35?w=400" },
+        { id: 3, nama: "RAM Corsair 16GB DDR4", harga: 850000, img: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=400" },
+        { id: 4, nama: "SSD Samsung 980 500GB", harga: 950000, img: "https://down-id.img.susercontent.com/file/id-11134207-7r990-lvplupqpj1xg97" },
+        { id: 5, nama: "Motherboard B550M", harga: 1750000, img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400" },
+        { id: 6, nama: "Keyboard Keychron K2", harga: 1350000, img: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400" }
+    ];
+
+    let keranjang = JSON.parse(localStorage.getItem('anca_pos_v3')) || [];
+
+    function showSection(id) {
+        document.getElementById('home').style.display = id === 'home' ? 'block' : 'none';
+        document.getElementById('about').style.display = id === 'about' ? 'block' : 'none';
+        document.getElementById('nav-home').classList.toggle('active', id === 'home');
+        document.getElementById('nav-about').classList.toggle('active', id === 'about');
+    }
+
+    function renderKatalog(data = dataProduk) {
+        const grid = document.getElementById('grid-produk');
+        grid.innerHTML = data.map(p => `
+            <div class="card">
+                <img src="${p.img}">
+                <div class="card-body">
+                    <h4>${p.nama}</h4>
+                    <div class="harga">Rp ${p.harga.toLocaleString('id-ID')}</div>
+                    <button class="btn btn-add" onclick="tambahItem(${p.id})">Tambah</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function filterProduk() {
+        const q = document.getElementById('searchBar').value.toLowerCase();
+        renderKatalog(dataProduk.filter(p => p.nama.toLowerCase().includes(q)));
+    }
+
+    function tambahItem(id) {
+        const p = dataProduk.find(x => x.id === id);
+        const ada = keranjang.find(k => k.id === id);
+        if(ada) ada.qty++; else keranjang.push({...p, qty: 1});
+        update();
+    }
+
+    function hapusItem(id) {
+        const idx = keranjang.findIndex(k => k.id === id);
+        if(keranjang[idx].qty > 1) keranjang[idx].qty--; else keranjang.splice(idx, 1);
+        update();
+    }
+
+    function update() {
+        localStorage.setItem('anca_pos_v3', JSON.stringify(keranjang));
+        const list = document.getElementById('list-keranjang');
+        const wrap = document.getElementById('wrapper-total');
+        if(keranjang.length === 0) {
+            list.innerHTML = '<p style="text-align:center; opacity:0.3;">Kosong</p>';
+            wrap.style.display = 'none';
+            return;
+        }
+        wrap.style.display = 'block';
+        let sub = 0;
+        list.innerHTML = keranjang.map(k => {
+            sub += (k.harga * k.qty);
+            return `<div class="cart-item">
+                <span><button onclick="hapusItem(${k.id})" style="background:none; border:none; color:red; cursor:pointer;">×</button> <span class="qty-badge">${k.qty}</span> ${k.nama.substring(0,12)}</span>
+                <b>${(k.harga*k.qty).toLocaleString('id-ID')}</b>
+            </div>`;
+        }).join('');
+        const disc = sub * 0.05;
+        document.getElementById('perhitungan-harga').innerHTML = `
+            <div style="display:flex; justify-content:space-between; opacity:0.6;"><span>Subtotal</span><span>${sub.toLocaleString('id-ID')}</span></div>
+            <div style="display:flex; justify-content:space-between; color:var(--success);"><span>Diskon 5%</span><span>-${disc.toLocaleString('id-ID')}</span></div>
+            <div style="display:flex; justify-content:space-between; font-weight:bold; font-size: 1.2em;"><span>TOTAL</span><span>${(sub-disc).toLocaleString('id-ID')}</span></div>
+        `;
+    }
+
+    function prosesTransaksi() {
+        const tgl = new Date();
+        const nota = "AN-" + tgl.getTime().toString().slice(-6);
+        let itemsHtml = "";
+        let sub = 0;
+        let waText = `*PESANAN ANCA NET*\nID: ${nota}\n\n`;
+
+        keranjang.forEach(k => {
+            const totalItem = k.harga * k.qty;
+            sub += totalItem;
+            itemsHtml += `<tr><td style="padding:5px 0">${k.nama} x${k.qty}</td><td align="right">${totalItem.toLocaleString('id-ID')}</td></tr>`;
+            waText += `• ${k.nama} (x${k.qty}) = ${totalItem.toLocaleString('id-ID')}\n`;
+        });
+
+        const disc = sub * 0.05;
+        const grandTotal = sub - disc;
+
+        // Update Text Struk
+        document.getElementById('st-nota').innerText = "NO: " + nota;
+        document.getElementById('st-tgl').innerText = tgl.toLocaleDateString();
+        document.getElementById('st-items').innerHTML = itemsHtml;
+        document.getElementById('st-sub').innerText = sub.toLocaleString('id-ID');
+        document.getElementById('st-disc').innerText = disc.toLocaleString('id-ID');
+        document.getElementById('st-total').innerText = grandTotal.toLocaleString('id-ID');
+
+        // Generate QR Code (Isinya adalah detail ringkas pembayaran)
+        const qrContent = `ANCA NET - NOTA: ${nota} - TOTAL: Rp ${grandTotal.toLocaleString('id-ID')}`;
+        document.getElementById('qr-image').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrContent)}`;
+        document.getElementById('qr-id-text').innerText = nota;
+
+        // Link WhatsApp
+        waText += `\n*TOTAL BAYAR: Rp ${grandTotal.toLocaleString('id-ID')}*`;
+        document.getElementById('wa-link').href = `https://wa.me/6283896654847?text=${encodeURIComponent(waText)}`;
+        
+        document.getElementById('area-struk').style.display = 'block';
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    renderKatalog();
+    update();
+</script>
+
+</body>
+</html>
